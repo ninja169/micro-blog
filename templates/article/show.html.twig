@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1 class="blog-post-title"><a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a></h1>
+
+    <div class="blog-post">
+        <p class="blog-post-meta">Publie le {{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }} par <a href="#">{{ article.author }}</a></p>
+
+        <p>{{ article.content }}</p>
+        <hr>
+    </div>
+
+    <a href="{{ path('app_home') }}">Retour a l'accueil</a><br>
+
+    {% if is_granted('ROLE_USER') and app.user == article.author %}
+        <a href="{{ path('app_article_edit', {'id': article.id}) }}">Modifier cet article</a>
+    {% endif %}
+{% endblock %}
